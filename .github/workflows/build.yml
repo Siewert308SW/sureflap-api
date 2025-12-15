@@ -45,10 +45,10 @@ jobs:
       packages: write
     steps:
       - name: Checkout
-        id: meta
         uses: actions/checkout@v6
 
       - name: Docker Meta
+        id: meta
         uses: docker/metadata-action@v5
         with:
           images: |
