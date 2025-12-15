@@ -18,25 +18,25 @@ async def get_all_pets() -> List[official.Pet]:
     return pets.get_pets()
 
 
-@router.get("/pets/position",
+@router.get("/position",
             response_model_exclude_none=True)
 async def get_all_pets_positions() -> List[official.PetPosition]:
     return pets.get_pet_positions()
 
 
-@router.get("/pets/{pet_id}",
+@router.get("/{pet_id}",
             response_model_exclude_none=True)
 def get_pet(pet_id: int) -> official.Pet:
     return pets.get_pet(pet_id)
 
 
-@router.get("/pets/{pet_id}/position",
+@router.get("/{pet_id}/position",
             response_model_exclude_none=True)
 async def get_pet_position(pet_id: int) -> official.PetPosition:
     return pets.get_pet_position(pet_id)
 
 
-@router.post("/pets/{pet_id}/position",
+@router.post("/{pet_id}/position",
              response_model_exclude_none=True,
              description="""
           Parameter `where`: **1** = Inside, **2** = Outside
