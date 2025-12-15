@@ -10,10 +10,11 @@ from surehub_api.services import auth
 
 def get_timeline_of_household(household_id: int) -> list:
     uri = f"{settings.endpoint}/api/timeline/household/{household_id}"
+
     result = []
+    fetch_size = 100
 
-    response = requests.get(uri, headers=auth.auth_headers(), params={'page_size': 100})
-
+    response = requests.get(uri, headers=auth.auth_headers())
     if response.ok:
         data = json.loads(response.text)
         count = data['meta']['count']
@@ -22,7 +23,7 @@ def get_timeline_of_household(household_id: int) -> list:
         request_count = math.ceil(count / page_size)
 
         for i in range(1, request_count + 1):
-            payload = {'page_size': 1000, 'page': i}
+            payload = {'page_size': fetch_size, 'page': i}
             response2 = requests.get(uri, headers=auth.auth_headers(), params=payload)
 
             if response2.ok:

@@ -1,4 +1,3 @@
-import json
 from datetime import datetime, timezone
 from typing import List
 
@@ -9,6 +8,7 @@ from fastapi.encoders import jsonable_encoder
 from surehub_api.config import settings
 from surehub_api.entities import official
 from surehub_api.services import auth
+from surehub_api.utils import http_utils
 
 PET_PAYLOAD = {
     'with[]': ['photo', 'position', 'status', 'conditions', 'breed', 'food_type', 'species']
@@ -19,24 +19,14 @@ def get_pets() -> List[official.Pet]:
     uri = f"{settings.endpoint}/api/pet"
 
     response = requests.get(uri, headers=auth.auth_headers(), params=PET_PAYLOAD)
-
-    if response.ok:
-        data = json.loads(response.text)
-        return data['data']
-    else:
-        raise HTTPException(status_code=response.status_code, detail=response.text.replace("\"", "'"))
+    return http_utils.extract_response_data(response)
 
 
 def get_pet(pet_id: int) -> official.Pet:
     uri = f"{settings.endpoint}/api/pet/{pet_id}"
 
     response = requests.get(uri, headers=auth.auth_headers(), params=PET_PAYLOAD)
-
-    if response.ok:
-        data = json.loads(response.text)
-        return data['data']
-    else:
-        raise HTTPException(status_code=response.status_code, detail=response.text.replace("\"", "'"))
+    return http_utils.extract_response_data(response)
 
 
 def get_pet_position(pet_id: int) -> official.PetPosition:
@@ -72,9 +62,4 @@ def set_pet_position(pet_id: int, pet_position: official.CreatePetPosition) -> o
         pet_position_dict['since'] = datetime.now(timezone.utc).isoformat()
 
     response = requests.post(uri, headers=auth.auth_headers(), json=pet_position_dict)
-
-    if response.ok:
-        data = json.loads(response.text)
-        return data['data']
-    else:
-        raise HTTPException(status_code=response.status_code, detail=response.text.replace("\"", "'"))
+    return http_utils.extract_response_data(response)

@@ -21,7 +21,7 @@ async def get_devices() -> List[official.Device]:
 @router.get("/{device_id}",
             response_model_exclude_none=True)
 async def get_device_by_id(device_id: int) -> official.Device:
-    return devices.get_devices_by_id(device_id)
+    return devices.get_device_by_id(device_id)
 
 
 @router.patch("/{device_id}/control",
