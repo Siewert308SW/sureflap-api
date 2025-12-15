@@ -3,7 +3,6 @@ name = "surehub-api"
 version = "6.0.0"
 description = "SureHub API is a simple, yet powerful RESTful API for products from Sure Petcare"
 license = "Apache-2.0"
-readme = "README.md"
 authors = [
     { name = "Fabian Eulitz", email = "dev@sustineo.de" },
 ]

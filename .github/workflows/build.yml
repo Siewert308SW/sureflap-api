@@ -91,6 +91,8 @@ jobs:
 
   publish-docs:
     uses: ./.github/workflows/docs.yml
+    needs:
+     - build-and-publish
 
   create-release:
     name: Create release
