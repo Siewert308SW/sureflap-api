@@ -22,7 +22,13 @@ app = FastAPI(
         {"name": Tags.HOUSEHOLD, "description": ""},
         {"name": Tags.DEVICE, "description": ""},
         {"name": Tags.PET, "description": ""},
-    ]
+    ],
+    swagger_ui_parameters={
+        "syntaxHighlight": {
+            "theme": "obsidian"
+        }
+    }
+
 )
 app.include_router(devices.router)
 app.include_router(households.router)
@@ -31,7 +37,7 @@ app.include_router(pets.router)
 
 
 # Redirect default url to docs
-@app.get("/",
+@app.get('/',
          include_in_schema=False)
 async def root():
     return RedirectResponse(url="/docs")
