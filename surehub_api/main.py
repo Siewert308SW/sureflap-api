@@ -18,17 +18,28 @@ app = FastAPI(
         "identifier": "Apache-2.0",
     },
     openapi_tags=[
-        {"name": Tags.DASHBOARD, "description": ""},
-        {"name": Tags.HOUSEHOLD, "description": ""},
-        {"name": Tags.DEVICE, "description": ""},
-        {"name": Tags.PET, "description": ""},
+        {
+            "name": Tags.DASHBOARD,
+            "description": "Endpoints used to retrieve aggregated and real-time data for user dashboards, including summaries, metrics, and status overviews."
+        },
+        {
+            "name": Tags.HOUSEHOLD,
+            "description": "Endpoints related to household management, including household configuration, users, pets, and associated devices."
+        },
+        {
+            "name": Tags.DEVICE,
+            "description": "Endpoints for managing and interacting with devices, including configuration, status, and telemetry."
+        },
+        {
+            "name": Tags.PET,
+            "description": "Endpoints related to pets, including location, pet-specific settings and metadata."
+        },
     ],
     swagger_ui_parameters={
         "syntaxHighlight": {
             "theme": "obsidian"
         }
     }
-
 )
 app.include_router(devices.router)
 app.include_router(households.router)
