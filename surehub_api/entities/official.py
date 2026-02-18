@@ -14,10 +14,10 @@ class DeviceType(IntEnum):
     PROGRAMMER = 5
     DUALSCAN_CAT_FLAP_CONNECT = 6
     MICROCHIP_FEEDER = 7
-    FELAQUA_CONNECT = 8 # Poseidon
+    FELAQUA_CONNECT = 8  # Poseidon
     CAT_FLAP_CONNECT = 9
     DUALSCAN_PET_DOOR_CONNECT = 10
-    DOG_BOWL_CONNECT = 32 # Cerberus
+    DOG_BOWL_CONNECT = 32  # Cerberus
     UNKNOWN_DEVICE_255 = 255
 
 
@@ -32,10 +32,21 @@ class SpecialProfile(IntEnum):
     SPECIAL_PROFILE_6 = 6
 
 
+class DeviceTag(BaseModel):
+    id: int
+    device_id: int
+    index: int
+    profile: Optional[int] = None
+    version: int
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+
 class Tag(BaseModel):
     id: int
     tag: Optional[str] = None
     supported_product_ids: Optional[List[DeviceType]] = None
+    incompatible_product_ids: Optional[List[DeviceType]] = None
     version: int
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
@@ -79,6 +90,7 @@ class Device(BaseModel):
     last_activity_at: Optional[datetime] = None
     last_new_event_at: Optional[datetime] = None
     control: Optional[DeviceControl] = None
+    tags: Optional[List[DeviceTag]] = None
 
 
 class Photo(BaseModel):

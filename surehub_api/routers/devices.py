@@ -49,23 +49,23 @@ async def set_device_lock_mode(device_id: int, lock_mode: Annotated[custom.LockM
 
 @router.get("/{device_id}/tags",
             response_model_exclude_none=True)
-async def get_tags_of_device(device_id: int) -> List[official.Tag]:
+async def get_tags_of_device(device_id: int) -> List[official.DeviceTag]:
     return devices.get_tags_of_device(device_id)
 
 
 @router.get("/{device_id}/tags/{tag_id}",
             response_model_exclude_none=True)
-async def get_tag_of_device(device_id: int, tag_id: int) -> official.Tag:
+async def get_tag_of_device(device_id: int, tag_id: int) -> official.DeviceTag:
     return devices.get_tag_of_device(device_id, tag_id)
 
 
 @router.put("/{device_id}/tags/{tag_id}",
             response_model_exclude_none=True)
-async def assign_tag_to_device(device_id: int, tag_id: int) -> official.Tag:
+async def assign_tag_to_device(device_id: int, tag_id: int) -> official.DeviceTag:
     return devices.assign_tag_to_device(device_id, tag_id)
 
 
 @router.delete('/{device_id}/tags/{tag_id}',
                response_model_exclude_none=True)
-def remove_tag_from_device(device_id: int, tag_id: int) -> official.Tag:
+def remove_tag_from_device(device_id: int, tag_id: int) -> official.DeviceTag:
     return devices.remove_tag_from_device(device_id, tag_id)

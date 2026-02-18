@@ -57,21 +57,21 @@ def set_lock_mode(device_id: int, lock_mode: custom.LockMode) -> official.Device
     return http_utils.extract_response_data(response)
 
 
-def get_tags_of_device(device_id: int) -> List[official.Tag]:
+def get_tags_of_device(device_id: int) -> List[official.DeviceTag]:
     uri = f"{settings.ENDPOINT}/api/device/{device_id}/tag"
 
     response = requests.get(uri, headers=auth.auth_headers())
     return http_utils.extract_response_data(response)
 
 
-def get_tag_of_device(device_id: int, tag_id: int) -> official.Tag:
+def get_tag_of_device(device_id: int, tag_id: int) -> official.DeviceTag:
     uri = f"{settings.ENDPOINT}/api/device/{device_id}/tag/{tag_id}"
 
     response = requests.get(uri, headers=auth.auth_headers())
     return http_utils.extract_response_data(response)
 
 
-def assign_tag_to_device(device_id: int, tag_id: int) -> official.Tag:
+def assign_tag_to_device(device_id: int, tag_id: int) -> official.DeviceTag:
     uri = f"{settings.ENDPOINT}/api/device/{device_id}/tag/{tag_id}"
 
     data = {
@@ -82,7 +82,7 @@ def assign_tag_to_device(device_id: int, tag_id: int) -> official.Tag:
     return http_utils.extract_response_data(response)
 
 
-def remove_tag_from_device(device_id: int, tag_id: int) -> official.Tag:
+def remove_tag_from_device(device_id: int, tag_id: int) -> official.DeviceTag:
     uri = f"{settings.ENDPOINT}/api/device/{device_id}/tag/{tag_id}"
 
     response = requests.delete(uri, headers=auth.auth_headers())
