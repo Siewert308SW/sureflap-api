@@ -7,10 +7,10 @@ from surehub_api.entities import official, custom
 from surehub_api.services import auth
 from surehub_api.utils import http_utils
 
-# Currently only dual scan cat flap and pet door support indoor only mode
 DEVICE_TYPES_SUPPORTING_INDOOR_ONLY_MODE = [
     official.DeviceType.DUALSCAN_PET_DOOR_CONNECT,
-    official.DeviceType.DUALSCAN_CAT_FLAP_CONNECT
+    official.DeviceType.DUALSCAN_CAT_FLAP_CONNECT,
+    official.DeviceType.CAT_FLAP_CONNECT
 ]
 
 
