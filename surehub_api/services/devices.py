@@ -16,7 +16,6 @@ DEVICE_TYPES_SUPPORTING_INDOOR_ONLY_MODE = [
 
 def get_devices(
         household_ids: List[int] | None = None,
-        product_ids: List[official.DeviceType] | None = None
 ) -> List[official.Device]:
     uri = f"{settings.endpoint}/api/device"
 
@@ -24,9 +23,6 @@ def get_devices(
 
     if household_ids:
         params["HouseholdId"] = household_ids
-
-    if product_ids:
-        params["ProductId"] = [product_id.value for product_id in product_ids]
 
     response = requests.get(uri, headers=auth.auth_headers(), params=params)
     return http_utils.extract_response_data(response)

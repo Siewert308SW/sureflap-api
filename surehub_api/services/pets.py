@@ -68,10 +68,9 @@ def _update_indoor_only_mode(pet_id: int, indoor_only: bool, household_ids: List
             detail=f"Failed to update indoor mode, because pet with id {pet_id} has no associated tag"
         )
 
-    supported_devices = [official.Device.model_validate(device) for device in devices.get_devices(
-        household_ids=household_ids,
-        product_ids=devices.DEVICE_TYPES_SUPPORTING_INDOOR_ONLY_MODE
-    )]
+    supported_devices = [official.Device.model_validate(device)
+                         for device in devices.get_devices(household_ids=household_ids)
+                         if device.get("product_id") in devices.DEVICE_TYPES_SUPPORTING_INDOOR_ONLY_MODE]
 
     if not supported_devices:
         raise HTTPException(
