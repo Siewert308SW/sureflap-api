@@ -15,12 +15,10 @@ router = APIRouter(
 @router.get("/",
             response_model_exclude_none=True)
 async def get_devices(
-        household_ids: Annotated[List[int], Query()] = None,
-        product_ids: Annotated[List[official.DeviceType], Query()] = None
+        household_ids: Annotated[List[int], Query()] = None
 ) -> List[official.Device]:
     return devices.get_devices(
-        household_ids=household_ids,
-        product_ids=product_ids
+        household_ids=household_ids
     )
 
 
