@@ -265,7 +265,7 @@ class DeviceControlThalamusMovementTagTimedAccess(BaseModel):
 
 
 class DeviceControlThalamusMovementTimedAccess(BaseModel):
-    profile: Optional[ThalamusMovementTimedAccessAllowedSpecialProfiles]
+    profile: Optional[ThalamusMovementTimedAccessAllowedSpecialProfiles] = None
     lock_time: Optional[str] = None
     unlock_time: Optional[str] = None
 

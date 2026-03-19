@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <!-- Load the latest Swagger UI code and style from npm using unpkg.com -->
     <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.min.js"></script>
@@ -12,8 +13,8 @@
 <body>
 <div id="swagger-ui"></div>
 <script>
-    window.onload = function () {
-        window.ui = SwaggerUIBundle({
+    globalThis.onload = function () {
+        globalThis.ui = SwaggerUIBundle({
             url: "openapi.json",
             dom_id: "#swagger-ui",
             deepLinking: true,

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List
+from typing import Annotated, List
 
 from fastapi import APIRouter, Query
 
@@ -51,11 +51,12 @@ async def get_pet_of_household(household_id: int, pet_id: int) -> official.Pet:
 
 @router.get("/{household_id}/pets/{pet_id}/report",
             response_model_exclude_none=True)
-async def get_pet_report(household_id: int,
-                         pet_id: int,
-                         from_datetime: datetime = Query(..., alias="from"),
-                         to_datetime: datetime = Query(..., alias="to")
-                         ) -> official.PetReport:
+async def get_pet_report(
+        household_id: int,
+        pet_id: int,
+        from_datetime: Annotated[datetime, Query(alias="from")],
+        to_datetime: Annotated[datetime, Query(alias="to")],
+) -> official.PetReport:
     return reports.get_pet_report(household_id, pet_id, from_datetime, to_datetime)
 
 
