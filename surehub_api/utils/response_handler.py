@@ -5,6 +5,8 @@ from fastapi import HTTPException
 from pydantic import TypeAdapter, ValidationError
 from requests import Response
 
+from surehub_api.utils.logger import log_response
+
 logger = getLogger(__name__)
 
 
@@ -14,7 +16,7 @@ def raise_for_status(response: Response) -> None:
     :param response: requests.Response object
     :raise HTTPException: If status code indicates client or server error
     """
-    _log_request(response)
+    log_response(response)
 
     if not response.ok:
         raise HTTPException(status_code=response.status_code, detail=_extract_error_detail(response))
@@ -60,14 +62,3 @@ def _extract_error_detail(response) -> str | dict:
         return response.json()
     except ValueError:
         return response.text.replace('"', "'")
-
-
-def _log_request(response: Response) -> None:
-    method = response.request.method
-    url = response.request.url
-    status_code = response.status_code
-
-    if 200 <= status_code < 300:
-        logger.info("External API request %s %s returned %s", method, url, status_code)
-    elif 400 <= status_code < 600:
-        logger.error("External API request %s %s returned %s", method, url, status_code)

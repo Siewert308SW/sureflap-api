@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -65,7 +68,17 @@ def main():
             allow_headers=["*"],
         )
 
-    uvicorn.run("main:app", port=settings.port, host="0.0.0.0", log_level=settings.loglevel, reload=settings.debug)
+    # Load logging configuration
+    log_config = json.loads((Path(__file__).parent / "logging.json").read_text())
+
+    uvicorn.run(
+        "surehub_api.main:app",
+        port=settings.port,
+        host="127.0.0.1",
+        log_level=settings.loglevel,
+        log_config=log_config,
+        reload=settings.debug
+    )
 
 
 if __name__ == '__main__':
