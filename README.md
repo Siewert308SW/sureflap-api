@@ -19,9 +19,6 @@ SureHub API is a simple, yet powerful RESTful API for products from [Sure Petcar
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/fabieu/surehub-api)](https://github.com/fabieu/surehub-api/pulls)
 [![License](https://img.shields.io/github/license/fabieu/surehub-api)](https://github.com/fabieu/surehub-api/blob/main/LICENSE)
 
-[![Container Version](https://img.shields.io/docker/v/fabieu/sureflap-api?registry_uri=https://ghcr.io&logo=docker)](https://github.com/fabieu/surehub-api/pkgs/container/surehub-api)
-[![Container Size](https://img.shields.io/docker/image-size/fabieu/sureflap-api?registry_uri=https://ghcr.io)](https://github.com/fabieu/surehub-api/pkgs/container/surehub-api)
-
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fabieu_surehub-api&metric=alert_status)](https://sonarcloud.io/summary/overall?id=fabieu_surehub-api)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=fabieu_surehub-api&metric=security_rating)](https://sonarcloud.io/summary/overall?id=fabieu_surehub-api)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=fabieu_surehub-api&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=fabieu_surehub-api)
