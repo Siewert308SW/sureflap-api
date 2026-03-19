@@ -38,11 +38,6 @@ app = FastAPI(
             "description": "Endpoints related to pets, including location, pet-specific settings and metadata."
         },
     ],
-    swagger_ui_parameters={
-        "syntaxHighlight": {
-            "theme": "obsidian"
-        }
-    }
 )
 app.include_router(devices.router)
 app.include_router(households.router)
