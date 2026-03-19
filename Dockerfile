@@ -1,27 +1,40 @@
-FROM python:3.14.3-alpine
+# ── Stage 1: build dependencies ──────────────────────────────────────────────
+FROM python:3.14.3-alpine AS builder
 
-ARG POETRY_VERSION=2.2.1
+ARG POETRY_VERSION=2.3.2
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PATH="/root/.local/bin:$PATH"
+    POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_IN_PROJECT=1 \
+    POETRY_VIRTUALENVS_CREATE=1
 
-# System deps (build + runtime)
-RUN apk add --no-cache --virtual .build-deps \
-        curl \
-        gcc \
-        libffi-dev \
-        musl-dev \
-    && python -m pip install --no-cache-dir "poetry==${POETRY_VERSION}" \
-    && apk del .build-deps
+RUN pip install --no-cache-dir "poetry==${POETRY_VERSION}"
 
-WORKDIR /usr/src/app
+WORKDIR /app
+
+COPY poetry.lock pyproject.toml ./
+RUN poetry install --only main --no-root
 
 COPY surehub_api ./surehub_api
-COPY poetry.lock pyproject.toml ./
+RUN poetry install --only main
 
-RUN poetry config virtualenvs.create false && \
-    poetry install --no-interaction --no-ansi --only main
+# ── Stage 2: runtime image ────────────────────────────────────────────────────
+FROM python:3.14.3-alpine AS runtime
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"
+
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+WORKDIR /app
+
+COPY --from=builder /app/.venv .venv
+COPY --from=builder /app/surehub_api ./surehub_api
+
+USER appuser
 
 EXPOSE 3001
 
