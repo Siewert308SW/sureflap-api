@@ -35,6 +35,15 @@ SureHub API is a simple, yet powerful RESTful API for products from [Sure Petcar
 
 ## Docker (recommended)
 
+> [!NOTE]
+> Starting with version 7.0.0, images are exclusively published to the [GitHub Container Registry](https://github.com/fabieu/surehub-api/pkgs/container/surehub-api) (`ghcr.io`). Docker Hub is no longer updated.
+> 
+> **Migration:** Update the `image` field in your `docker-compose.yaml`:
+> ```diff
+> - image: fabieu/surehub-api:latest
+> + image: ghcr.io/fabieu/surehub-api:latest
+> ```
+
 ```bash
 docker run -d -p 8080:3001 -e SUREHUB_EMAIL='{YOUR_SUREHUB_EMAIL}' -e SUREHUB_PASSWORD='{YOUR_SUREHUB_PASSWORD}' ghcr.io/fabieu/surehub-api:latest
 ```
