@@ -3,8 +3,8 @@ services:
     image: ghcr.io/fabieu/surehub-api:latest
     container_name: surehub-api
     environment:
-      - SUREHUB_EMAIL=<YOUR_SUREHUB_EMAIL>
-      - SUREHUB_PASSWORD=<YOUR_SUREHUB_PASSWORD>
+      - SUREHUB_EMAIL=
+      - SUREHUB_PASSWORD=
       - SUREHUB_LOGLEVEL=warning
     ports:
       - "8080:3001"
