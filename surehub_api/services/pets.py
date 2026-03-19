@@ -3,7 +3,6 @@ from typing import List
 
 import requests
 from fastapi import HTTPException
-from fastapi.encoders import jsonable_encoder
 
 from surehub_api.config import settings
 from surehub_api.entities import official, dto, official_v2
@@ -91,39 +90,3 @@ def _update_indoor_only_mode(pet_id: int, indoor_only: bool, household_ids: List
 
         response = requests.put(uri, headers=auth.auth_headers(), json=[payload.model_dump(mode='json')])
         response_handler.raise_for_status(response)
-
-
-def get_pet_position(pet_id: int) -> official.PetPosition:
-    pet = get_pet(pet_id)
-    pet_position = pet.position
-
-    if not pet_position:
-        raise HTTPException(status_code=500, detail=f"Invalid position '{pet_position}' for pet_id {pet_id}")
-
-    return pet_position
-
-
-def get_pet_positions() -> List[official.PetPosition]:
-    pet_positions = []
-
-    for pet in get_pets():
-        pet_position = pet.position
-
-        if not pet_position:
-            raise HTTPException(status_code=500, detail=f"Invalid position '{pet_position}' for pet_id {pet.id}")
-
-        pet_positions.append(pet_position)
-
-    return pet_positions
-
-
-def set_pet_position(pet_id: int, pet_position: official.CreatePetPosition) -> official.PetPosition:
-    uri = f"{settings.endpoint}/api/pet/{pet_id}/position"
-
-    pet_position_dict = jsonable_encoder(pet_position)
-
-    if not pet_position_dict['since']:
-        pet_position_dict['since'] = datetime.now(timezone.utc).isoformat()
-
-    response = requests.post(uri, headers=auth.auth_headers(), json=pet_position_dict)
-    return response_handler.parse(response, model=official.PetPosition)

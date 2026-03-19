@@ -3,7 +3,7 @@ from typing import List
 import requests
 
 from surehub_api.config import settings
-from surehub_api.entities import official, custom
+from surehub_api.entities import official
 from surehub_api.services import auth
 from surehub_api.utils import response_handler
 
@@ -42,22 +42,12 @@ def get_device_state_by_id(device_id) -> official.DeviceControl:
     return response_handler.parse(response, model=official.DeviceControl)
 
 
-def set_lock_mode(device_id: int, lock_mode: custom.LockMode) -> official.DeviceControl:
-    uri = f"{settings.endpoint}/api/device/{device_id}/control"
-
-    data = {
-        "locking": lock_mode.mode_id
-    }
-
-    response = requests.put(uri, headers=auth.auth_headers(), json=data)
-    return response_handler.parse(response, model=official.DeviceControl)
-
-
 def get_tags_of_device(device_id: int) -> List[official.DeviceTag]:
     uri = f"{settings.endpoint}/api/device/{device_id}/tag"
 
     response = requests.get(uri, headers=auth.auth_headers())
     return response_handler.parse(response, model=List[official.Tag])
+
 
 def update_device_state(device_id: int, device_state: official.DeviceControl) -> official.DeviceControl:
     uri = f"{settings.endpoint}/api/device/{device_id}/control"

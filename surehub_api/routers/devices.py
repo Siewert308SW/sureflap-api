@@ -2,7 +2,7 @@ from typing import List, Annotated, Any
 
 from fastapi import APIRouter, Query
 
-from surehub_api.entities import official, custom
+from surehub_api.entities import official
 from surehub_api.entities.openapi import Tags
 from surehub_api.services import devices
 
@@ -32,18 +32,6 @@ async def get_device_by_id(device_id: int) -> official.Device:
             response_model_exclude_none=True)
 async def get_device_state_by_id(device_id: int) -> Any:
     return devices.get_device_state_by_id(device_id)
-
-
-@router.patch("/{device_id}/control",
-              deprecated=True,
-              response_model_exclude_none=True)
-async def set_device_lock_mode(device_id: int, lock_mode: Annotated[custom.LockMode, Query(
-    description="**none** = Pets can enter and leave the house \n\n"
-                "**out** = Pets can leave the house but can no longer enter it \n\n"
-                "**in** = Pets can enter the house but can no longer leave it \n\n"
-                "**both** = Pets can no longer enter and leave the house \n\n")
-]) -> official.DeviceControl:
-    return devices.set_lock_mode(device_id, lock_mode)
 
 
 @router.patch("/{device_id}/state",

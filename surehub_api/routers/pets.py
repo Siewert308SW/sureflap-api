@@ -18,13 +18,6 @@ async def get_all_pets() -> List[official.Pet]:
     return pets.get_pets()
 
 
-@router.get("/position",
-            response_model_exclude_none=True,
-            deprecated=True)
-async def get_all_pets_positions() -> List[official.PetPosition]:
-    return pets.get_pet_positions()
-
-
 @router.get("/{pet_id}",
             response_model_exclude_none=True)
 async def get_pet(pet_id: int) -> official.Pet:
@@ -52,20 +45,3 @@ async def update_pet_state(
         ] = None
 ) -> None:
     return pets.update_pet_state(pet_id, payload, household_ids)
-
-
-@router.get("/{pet_id}/position",
-            response_model_exclude_none=True,
-            deprecated=True)
-async def get_pet_position(pet_id: int) -> official.PetPosition:
-    return pets.get_pet_position(pet_id)
-
-
-@router.post("/{pet_id}/position",
-             response_model_exclude_none=True,
-             deprecated=True,
-             description="""
-          Parameter `where`: **1** = Inside, **2** = Outside
-          """)
-async def set_pet_position(pet_id: int, payload: official.CreatePetPosition) -> official.PetPosition:
-    return pets.set_pet_position(pet_id, payload)
