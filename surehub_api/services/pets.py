@@ -68,7 +68,7 @@ def _update_indoor_only_mode(pet_id: int, indoor_only: bool, household_ids: List
         )
 
     supported_devices = [device for device in devices.get_devices(household_ids=household_ids)
-                         if device.get("product_id") in devices.DEVICE_TYPES_SUPPORTING_INDOOR_ONLY_MODE]
+                         if device.product_id in devices.DEVICE_TYPES_SUPPORTING_INDOOR_ONLY_MODE]
 
     if not supported_devices:
         raise HTTPException(
